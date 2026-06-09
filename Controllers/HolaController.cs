@@ -1,29 +1,67 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace ING_WEB_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class HolaController : ControllerBase
+    public class NumerosController : ControllerBase
     {
-        [HttpGet("saludo")]
-        public IActionResult Saludo([FromQuery] string nombre)
+        [HttpGet("analizar")]
+        public IActionResult Analizar([FromQuery] int n)
         {
-            if (string.IsNullOrWhiteSpace(nombre))
+            string paridad;
+            string tipoNumero;
+            bool esPrimo;
+
+            if (n % 2 == 0)
             {
-                return BadRequest(new
-                {
-                    mensaje = "Debe ingresar un nombre."
-                });
+                paridad = "Par";
+            }
+            else
+            {
+                paridad = "Impar";
             }
 
-            string mensajeBienvenida = "Bienvenido " + nombre;
+            if (n > 0)
+            {
+                tipoNumero = "Positivo";
+            }
+            else if (n < 0)
+            {
+                tipoNumero = "Negativo";
+            }
+            else
+            {
+                tipoNumero = "Cero";
+            }
+
+            esPrimo = VerificarPrimo(n);
 
             return Ok(new
             {
-                mensaje = mensajeBienvenida
+                numero = n,
+                paridad = paridad,
+                primo = esPrimo ? "Es primo" : "No es primo",
+                tipo = tipoNumero
             });
+        }
+
+        private bool VerificarPrimo(int numero)
+        {
+            if (numero <= 1)
+            {
+                return false;
+            }
+
+            for (int i = 2; i < numero; i++)
+            {
+                if (numero % i == 0)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }
