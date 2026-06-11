@@ -21,7 +21,8 @@ namespace ING_WEB_API.Controllers
             {
                 paridad = "Impar";
             }
-
+            
+                
             if (n > 0)
             {
                 tipo = "Positivo";
@@ -60,7 +61,7 @@ namespace ING_WEB_API.Controllers
                     }
                 }
             }
-
+            // Estudiar//
             return Ok(new
             {
                 numero = n,
