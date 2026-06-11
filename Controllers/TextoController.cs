@@ -47,5 +47,30 @@ namespace ING_WEB_API.Controllers
                 vocales = vocales
             });
         }
+
+        [HttpGet("invertir")]
+        public IActionResult Invertir([FromQuery] string texto)
+        {
+            string textoInvertido = "";
+
+            if (texto == null || texto == "")
+            {
+                return BadRequest(new
+                {
+                    mensaje = "Debe ingresar un texto."
+                });
+            }
+
+            for (int i = texto.Length - 1; i >= 0; i--)
+            {
+                textoInvertido = textoInvertido + texto[i];
+            }
+
+            return Ok(new
+            {
+                textoOriginal = texto,
+                textoInvertido = textoInvertido
+            });
+        }
     }
 }
